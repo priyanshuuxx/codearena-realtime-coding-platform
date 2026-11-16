@@ -1,0 +1,216 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+enum Difficulty {
+  EASY
+  MEDIUM
+  HARD
+}
+
+enum Verdict {
+  PENDING
+  ACCEPTED
+  WRONG_ANSWER
+  RUNTIME_ERROR
+  COMPILATION_ERROR
+  TIME_LIMIT_EXCEEDED
+}
+
+enum BattleStatus {
+  WAITING
+  ACTIVE
+  COMPLETED
+  CANCELLED
+}
+
+enum BattleType {
+  CODING
+  DEBUGGING
+  MCQ
+  MIXED
+}
+
+enum ParticipantResult {
+  PENDING
+  WIN
+  LOSS
+  DRAW
+}
+
+enum NotificationType {
+  BATTLE_INVITE
+  BATTLE_RESULT
+  RATING_CHANGE
+  NEW_PROBLEM
+  ACHIEVEMENT
+}
+
+model User {
+  id                 String              @id @default(cuid())
+  name               String
+  email              String              @unique
+  passwordHash       String
+  role               Role                @default(USER)
+  rating             Int                 @default(1000)
+  wins               Int                 @default(0)
+  losses             Int                 @default(0)
+  mcqScore           Int                 @default(0)
+  debuggingScore     Int                 @default(0)
+  createdAt          DateTime            @default(now())
+  updatedAt          DateTime            @updatedAt
+  submissions        Submission[]
+  mcqAttempts        MCQAttempt[]
+  battleParticipants BattleParticipant[]
+  leaderboard        Leaderboard?
+  notifications      Notification[]
+}
+
+model Problem {
+  id           String       @id @default(cuid())
+  title        String
+  slug         String       @unique
+  description  String
+  difficulty   Difficulty
+  tags         String[]
+  constraints  String?
+  sampleInput  String
+  sampleOutput String
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+  testCases    TestCase[]
+  submissions  Submission[]
+  battles      Battle[]
+}
+
+model TestCase {
+  id        String  @id @default(cuid())
+  input     String
+  output    String
+  isHidden  Boolean @default(true)
+  problemId String
+  problem   Problem @relation(fields: [problemId], references: [id], onDelete: Cascade)
+}
+
+model Submission {
+  id        String   @id @default(cuid())
+  code      String
+  language  String
+  verdict   Verdict  @default(PENDING)
+  runtimeMs Int?
+  memoryKb  Int?
+  createdAt DateTime @default(now())
+  userId    String
+  problemId String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  problem   Problem  @relation(fields: [problemId], references: [id], onDelete: Cascade)
+}
+
+model DebugChallenge {
+  id               String          @id @default(cuid())
+  title            String
+  slug             String          @unique
+  statement        String
+  buggyCode        String
+  language         String
+  expectedBehavior String
+  errorType        String
+  difficulty       Difficulty
+  tags             String[]
+  createdAt        DateTime        @default(now())
+  updatedAt        DateTime        @updatedAt
+  testCases        DebugTestCase[]
+}
+
+model DebugTestCase {
+  id               String         @id @default(cuid())
+  input            String
+  output           String
+  isHidden         Boolean        @default(true)
+  debugChallengeId String
+  debugChallenge   DebugChallenge @relation(fields: [debugChallengeId], references: [id], onDelete: Cascade)
+}
+
+model MCQQuestion {
+  id          String       @id @default(cuid())
+  question    String
+  category    String
+  options     Json
+  answer      Json
+  explanation String
+  difficulty  Difficulty
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  attempts    MCQAttempt[]
+}
+
+model MCQAttempt {
+  id            String      @id @default(cuid())
+  selectedAnswer Json
+  isCorrect     Boolean
+  score         Int         @default(0)
+  createdAt     DateTime    @default(now())
+  userId        String
+  questionId    String
+  user          User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  question      MCQQuestion @relation(fields: [questionId], references: [id], onDelete: Cascade)
+}
+
+model Battle {
+  id           String              @id @default(cuid())
+  type         BattleType          @default(CODING)
+  status       BattleStatus        @default(WAITING)
+  startedAt    DateTime?
+  endedAt      DateTime?
+  winnerUserId String?
+  problemId    String?
+  createdAt    DateTime            @default(now())
+  updatedAt    DateTime            @updatedAt
+  problem      Problem?            @relation(fields: [problemId], references: [id])
+  participants BattleParticipant[]
+}
+
+model BattleParticipant {
+  id       String            @id @default(cuid())
+  result   ParticipantResult @default(PENDING)
+  score    Int               @default(0)
+  joinedAt DateTime          @default(now())
+  userId   String
+  battleId String
+  user     User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  battle   Battle            @relation(fields: [battleId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, battleId])
+}
+
+model Leaderboard {
+  id             String   @id @default(cuid())
+  rank           Int
+  ratingSnapshot Int
+  solvedCount    Int      @default(0)
+  battleWins     Int      @default(0)
+  userId         String   @unique
+  updatedAt      DateTime @updatedAt
+  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Notification {
+  id        String           @id @default(cuid())
+  type      NotificationType
+  title     String
+  message   String
+  isRead    Boolean          @default(false)
+  createdAt DateTime         @default(now())
+  userId    String
+  user      User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+}

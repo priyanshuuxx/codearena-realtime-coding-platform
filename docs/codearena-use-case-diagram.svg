@@ -1,0 +1,109 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080">
+  <defs>
+    <linearGradient id="systemFill" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#eef8ff"/>
+      <stop offset="1" stop-color="#f7fbff"/>
+    </linearGradient>
+    <pattern id="triangles" width="220" height="180" patternUnits="userSpaceOnUse">
+      <path d="M0 180L110 0L220 180M0 0L110 180L220 0" fill="none" stroke="#d9deeb" stroke-width="18" opacity=".22"/>
+    </pattern>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+      <path d="M0 0L10 5L0 10Z" fill="#2f5db3"/>
+    </marker>
+    <style>
+      .title { font: 56px Arial, Helvetica, sans-serif; fill: #293c8d; }
+      .system-title { font: 700 32px Arial, Helvetica, sans-serif; fill: #17356f; }
+      .label { font: 700 15px Arial, Helvetica, sans-serif; fill: #17356f; text-anchor: middle; }
+      .actor-label { font: 700 17px Arial, Helvetica, sans-serif; fill: #17356f; text-anchor: middle; }
+      .actor-sub { font: 15px Arial, Helvetica, sans-serif; fill: #476080; text-anchor: middle; }
+      .usecase { fill: #f7fbff; stroke: #2d72cc; stroke-width: 2; }
+      .line { fill: none; stroke: #2f5db3; stroke-width: 2; }
+      .include { fill: none; stroke: #2f5db3; stroke-width: 1.8; stroke-dasharray: 8 6; marker-end: url(#arrow); }
+      .small { font: 13px Arial, Helvetica, sans-serif; fill: #294a89; }
+    </style>
+  </defs>
+
+  <rect width="1920" height="1080" fill="#ffffff"/>
+  <rect x="0" y="0" width="1920" height="1080" fill="url(#triangles)"/>
+  <rect x="0" y="0" width="54" height="1080" fill="#293c8d"/>
+  <rect x="0" y="680" width="54" height="400" fill="#a61937"/>
+  <path d="M132 190H860" stroke="#293c8d" stroke-width="8"/>
+  <path d="M860 190H1110" stroke="#a61937" stroke-width="8"/>
+  <text x="132" y="150" class="title">Use Case Diagram</text>
+
+  <rect x="250" y="230" width="1420" height="690" fill="#ffffff" fill-opacity=".78" stroke="#a8b8db" stroke-width="2"/>
+  <rect x="500" y="270" width="930" height="590" rx="18" fill="url(#systemFill)" stroke="#2b8ae8" stroke-width="3"/>
+  <text x="965" y="314" class="system-title" text-anchor="middle">CodeArena</text>
+
+  <!-- Guest actor -->
+  <g stroke="#17356f" stroke-width="4" fill="none">
+    <circle cx="375" cy="395" r="15" fill="#1976d2"/>
+    <path d="M375 410V465M345 432H405M375 465L350 505M375 465L400 505"/>
+  </g>
+  <text x="375" y="538" class="actor-label">Guest</text>
+  <text x="375" y="561" class="actor-sub">(Unauthenticated User)</text>
+
+  <!-- Registered user actor -->
+  <g stroke="#17356f" stroke-width="4" fill="none">
+    <circle cx="375" cy="660" r="15" fill="#1976d2"/>
+    <path d="M375 675V730M345 697H405M375 730L350 770M375 730L400 770"/>
+  </g>
+  <text x="375" y="804" class="actor-label">Registered User</text>
+  <text x="375" y="827" class="actor-sub">(Player)</text>
+
+  <!-- Core use cases -->
+  <g>
+    <ellipse class="usecase" cx="650" cy="390" rx="122" ry="27"/><text class="label" x="650" y="395">Register</text>
+    <ellipse class="usecase" cx="650" cy="455" rx="122" ry="27"/><text class="label" x="650" y="460">Login</text>
+    <ellipse class="usecase" cx="720" cy="535" rx="165" ry="29"/><text class="label" x="720" y="540">Solve Coding Problems</text>
+    <ellipse class="usecase" cx="720" cy="605" rx="165" ry="29"/><text class="label" x="720" y="610">Run and Submit Code</text>
+    <ellipse class="usecase" cx="720" cy="675" rx="165" ry="29"/><text class="label" x="720" y="680">Debugging Practice</text>
+    <ellipse class="usecase" cx="720" cy="745" rx="165" ry="29"/><text class="label" x="720" y="750">MCQ Practice</text>
+    <ellipse class="usecase" cx="1050" cy="535" rx="165" ry="29"/><text class="label" x="1050" y="540">Mock Interview</text>
+    <ellipse class="usecase" cx="1050" cy="605" rx="165" ry="29"/><text class="label" x="1050" y="610">Join Coding Battle</text>
+    <ellipse class="usecase" cx="1050" cy="675" rx="165" ry="29"/><text class="label" x="1050" y="680">View Leaderboard</text>
+    <ellipse class="usecase" cx="1050" cy="745" rx="165" ry="29"/><text class="label" x="1050" y="750">View Progress</text>
+  </g>
+
+  <!-- External code execution system -->
+  <g stroke="#17356f" stroke-width="3" fill="none">
+    <circle cx="1570" cy="420" r="14" fill="#1976d2"/>
+    <path d="M1570 434V480M1545 452H1595M1570 480L1548 514M1570 480L1592 514"/>
+  </g>
+  <text x="1570" y="545" class="actor-label">Judge0 API</text>
+  <text x="1570" y="567" class="actor-sub">(Code Execution)</text>
+
+  <!-- External realtime system -->
+  <g stroke="#17356f" stroke-width="3" fill="none">
+    <circle cx="1570" cy="690" r="14" fill="#1976d2"/>
+    <path d="M1570 704V750M1545 722H1595M1570 750L1548 784M1570 750L1592 784"/>
+  </g>
+  <text x="1570" y="815" class="actor-label">Socket.IO</text>
+  <text x="1570" y="837" class="actor-sub">(Real-Time Service)</text>
+
+  <!-- Associations -->
+  <path class="line" d="M404 420L528 390"/>
+  <path class="line" d="M404 450L528 455"/>
+  <path class="line" d="M404 680L555 535M404 696L555 605M404 712L555 675M404 728L555 745M404 680L885 535M404 696L885 605M404 712L885 675M404 728L885 745"/>
+  <path class="line" d="M1215 605L1540 470"/>
+  <path class="line" d="M1215 605L1540 720"/>
+
+  <!-- Include relationships -->
+  <path class="include" d="M885 535L790 605"/>
+  <text x="835" y="565" class="small">&lt;&lt;include&gt;&gt;</text>
+  <path class="include" d="M1215 605L1215 735L1215 735"/>
+  <text x="1232" y="685" class="small">real-time updates</text>
+
+  <!-- Legend -->
+  <rect x="1420" y="290" width="200" height="150" rx="8" fill="#edf8ff" stroke="#72b1e7" stroke-width="2"/>
+  <text x="1440" y="320" class="actor-label" text-anchor="start">Legend</text>
+  <g stroke="#17356f" stroke-width="2" fill="none">
+    <circle cx="1450" cy="348" r="7" fill="#1976d2"/><path d="M1450 355V375M1438 363H1462M1450 375L1442 388M1450 375L1458 388"/>
+  </g>
+  <text x="1480" y="370" class="small">Actor</text>
+  <ellipse class="usecase" cx="1450" cy="410" rx="28" ry="11"/><text x="1480" y="414" class="small">Use case</text>
+
+  <path d="M132 970H430" stroke="#a61937" stroke-width="4"/>
+  <text x="132" y="1010" font-family="Arial, Helvetica, sans-serif" font-size="20" fill="#a61937">CodeArena | Competitive Coding Platform</text>
+  <text x="650" y="1010" font-family="Arial, Helvetica, sans-serif" font-size="17" fill="#5d6b80">B.Tech Information Technology | Project Presentation</text>
+</svg>
