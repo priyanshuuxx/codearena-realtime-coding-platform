@@ -53,6 +53,7 @@ CodeArena is a full-stack competitive coding and interview-practice platform. It
 
 ## 📸 Screenshots
 
+
 ### Login Page
 ![Login Page](docs/screenshots/login.png)
 
@@ -64,9 +65,6 @@ CodeArena is a full-stack competitive coding and interview-practice platform. It
 
 ### Real-Time Coding Battle
 ![Coding Battle](docs/screenshots/battle.png)
-
-### Leaderboard
-![Leaderboard](docs/screenshots/leaderboard.png)
 
 ## 📂 Project Structure
 
