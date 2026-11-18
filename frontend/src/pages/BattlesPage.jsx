@@ -82,6 +82,7 @@ function BattlesPage() {
   const [battles, setBattles] = useState([]);
   const [battleHistory, setBattleHistory] = useState([]);
   const [activeBattle, setActiveBattle] = useState(null);
+  const [mobileBattleTab, setMobileBattleTab] = useState('code');
   const [isLevelOpen, setIsLevelOpen] = useState(false);
   const [isPrivateRoomOpen, setIsPrivateRoomOpen] = useState(false);
   const [selectedLevel, setSelectedLevel] = useState('MEDIUM');
@@ -137,6 +138,7 @@ function BattlesPage() {
 
   function startBattle(battle) {
     setActiveBattle(battle);
+    setMobileBattleTab('code');
     setRemainingSeconds(battle.durationSeconds || 900);
     setBotProgress(battle.progress || 0);
     setBattleLanguage('javascript');
@@ -373,17 +375,21 @@ function BattlesPage() {
     finishBattle('BOT', delta);
   }, [activeBattle, botProgress, isBattleFinished]);
 
+  useEffect(() => {
+    if (battleResult?.finished) setMobileBattleTab('match');
+  }, [battleResult?.finished]);
+
   return (
     <AppLayout
       eyebrow="Realtime 1v1"
       title="Battle Rooms"
       action={
-        <div className="flex flex-wrap items-center gap-3">
-          <span className="inline-flex items-center gap-2 rounded-md border border-emerald-200 bg-emerald-50 px-3 py-2 text-sm font-semibold text-emerald-700">
+        <div className="battle-page-actions flex flex-wrap items-center gap-3">
+          <span className="battle-online-count inline-flex items-center gap-2 rounded-md border border-emerald-200 bg-emerald-50 px-3 py-2 text-sm font-semibold text-emerald-700">
             <Users size={16} />
             {onlineCount} online
           </span>
-          <span className={`rounded-md border px-3 py-2 text-xs font-bold uppercase tracking-wide ${connectionStatus === 'connected' ? 'border-emerald-200 bg-emerald-50 text-emerald-700' : 'border-amber-200 bg-amber-50 text-amber-700'}`}>
+          <span className={`battle-connection-chip rounded-md border px-3 py-2 text-xs font-bold uppercase tracking-wide ${connectionStatus === 'connected' ? 'border-emerald-200 bg-emerald-50 text-emerald-700' : 'border-amber-200 bg-amber-50 text-amber-700'}`}>
             {connectionStatus === 'connected' ? 'Realtime connected' : connectionStatus === 'offline' ? 'Offline · retrying' : 'Reconnecting'}
           </span>
           <button className="inline-flex items-center gap-2 rounded-md border border-indigo-200 bg-white px-4 py-3 text-sm font-semibold text-indigo-700 shadow-sm transition hover:-translate-y-0.5 hover:bg-indigo-50" type="button" onClick={() => setIsPrivateRoomOpen(true)}>
@@ -461,10 +467,14 @@ function BattlesPage() {
       )}
 
       {activeBattle && (
-        <Panel className="mb-6 overflow-hidden border-indigo-100">
-          <div className="grid gap-5 xl:grid-cols-[1fr_340px]">
-            <div>
-              <div className="flex flex-wrap items-start justify-between gap-4">
+        <Panel className="battle-active-panel mb-6 overflow-hidden border-indigo-100">
+          <div className="battle-mobile-tabs" role="tablist" aria-label="Battle panels">
+            <button type="button" role="tab" aria-selected={mobileBattleTab === 'code'} onClick={() => setMobileBattleTab('code')}>Code</button>
+            <button type="button" role="tab" aria-selected={mobileBattleTab === 'match'} onClick={() => setMobileBattleTab('match')}>Match</button>
+          </div>
+          <div className="battle-workspace">
+            <div className={`battle-editor-column${mobileBattleTab === 'match' ? ' battle-panel-mobile-hidden' : ''}`}>
+              <div className="battle-active-heading flex flex-wrap items-start justify-between gap-4">
                 <div>
                   <p className="text-xs font-bold uppercase tracking-[0.2em] text-indigo-600">Live Competition</p>
                   <h3 className="mt-2 text-2xl font-bold text-slate-950">{activeBattle.problemTitle}</h3>
@@ -483,9 +493,9 @@ function BattlesPage() {
                 </div>
               </div>
 
-              <div className="mt-5 overflow-hidden rounded-lg border border-slate-200">
+              <div className="battle-editor-frame mt-5 overflow-hidden rounded-lg border border-slate-200">
                 <Editor
-                  height="410px"
+                  height="clamp(300px, 56vh, 520px)"
                   language={battleLanguage === 'cpp' ? 'cpp' : battleLanguage}
                   theme="vs-dark"
                   value={battleCode}
@@ -494,14 +504,14 @@ function BattlesPage() {
                 />
               </div>
 
-              <div className="mt-4 grid gap-4 lg:grid-cols-[1fr_180px_180px]">
+              <div className="battle-input-controls mt-4 grid gap-4 lg:grid-cols-[1fr_180px_180px]">
                 <textarea
                   className="min-h-28 rounded-md border border-slate-200 bg-white p-3 text-sm text-slate-800 outline-none focus:border-indigo-300"
                   value={battleInput}
                   onChange={(event) => setBattleInput(event.target.value)}
                   placeholder="Custom input for this battle"
                 />
-                <div className="grid gap-3">
+                <div className="battle-action-group grid gap-3">
                   <select
                     className="rounded-md border border-slate-200 bg-white px-3 py-3 text-sm text-slate-800"
                     value={battleLanguage}
@@ -524,7 +534,7 @@ function BattlesPage() {
               </div>
             </div>
 
-            <div className="grid content-start gap-4">
+            <div className={`battle-match-column grid content-start gap-4${mobileBattleTab === 'code' ? ' battle-panel-mobile-hidden' : ''}`}>
               <div className="rounded-xl border border-slate-200 bg-slate-50 p-4">
                 <div className="flex items-center justify-between">
                   <div>
