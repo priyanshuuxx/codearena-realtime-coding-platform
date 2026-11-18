@@ -70,4 +70,4 @@ function createQuestion(index) {
   };
 }
 
-export const mcqQuestions = Array.from({ length: 500 }, (_, index) => createQuestion(index));
+export const mcqQuestions = Array.from({ length: 1000 }, (_, index) => createQuestion(index));

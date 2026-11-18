@@ -107,7 +107,7 @@ function DashboardLayout({ children, user, logout }) {
             </div>
             {isNotificationsOpen ? (
               <div className="mt-6 space-y-3">
-                {['220 DSA problems are ready.', '100 debugging tasks are ready.', '150 MCQs are ready.', 'Level-based bot battles are active.'].map((item) => (
+                {['1,000 DSA problems are ready.', '1,000 debugging tasks are ready.', '1,000 MCQs are ready.', 'Level-based bot battles are active.'].map((item) => (
                   <div key={item} className="rounded-lg border border-slate-200 bg-slate-50 p-4 text-sm text-slate-700">
                     {item}
                   </div>

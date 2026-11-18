@@ -114,6 +114,18 @@ npm run dev
 
 Open the frontend URL displayed in your terminal.
 
+## 🚀 Deploy to Vercel and Render
+
+This repository includes a Render Blueprint for the API and PostgreSQL database (`render.yaml`) and Vercel build settings (`vercel.json`) for the frontend.
+
+1. Push the project to GitHub, then import the repository into Vercel. Keep the project root at the repository root; the included config builds the `frontend` workspace and publishes `frontend/dist`.
+2. In Vercel Project Settings → Environment Variables, set `VITE_API_URL` to `https://<your-render-service>.onrender.com/api/v1` and `VITE_SOCKET_URL` to `https://<your-render-service>.onrender.com`. Set them for Production and Preview as needed, then redeploy.
+3. In Render, create a Blueprint from the same repository using `render.yaml`. It provisions a free API service and PostgreSQL database, generates `JWT_SECRET`, applies Prisma migrations during the build, and seeds the problem and quiz catalogs.
+4. After Render creates the service, set `CLIENT_URL` in the Render API service to the Vercel production origin (for example `https://codearena.vercel.app`, with no trailing slash). Set `CLIENT_URLS` to a comma-separated list if more than one Vercel origin needs API access. Save and redeploy the Render service.
+5. Visit `https://<your-render-service>.onrender.com/health`; it should return JSON with `status: "ok"`. Then test signup/login, problems, quiz attempts, submissions, and a Socket.IO connection from the Vercel site.
+
+Render's free web service sleeps after inactivity, so its first request can take a while. The free PostgreSQL database expires after 30 days; download a backup or upgrade it before then to keep user data. The battle presence and private-room state are process-local, so keep the API at one instance; they are not designed for multi-instance scaling yet. Add `JUDGE0_API_KEY` in Render if you want remote code execution rather than the app's local fallback.
+
 ## 🌐 Application Routes
 
 ### Frontend

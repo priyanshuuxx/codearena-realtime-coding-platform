@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { Code2, Eye, EyeOff, ShieldCheck, Sparkles } from 'lucide-react';
-import CodeArenaBackground from '../components/CodeArenaBackground.jsx';
 import { useAuth } from '../context/AuthContext.jsx';
 
 function AuthPage({ mode }) {
@@ -18,7 +17,7 @@ function AuthPage({ mode }) {
   const [showPassword, setShowPassword] = useState(false);
 
   if (!isReady) {
-    return <div className="grid min-h-screen place-items-center bg-[#050b14] text-sm text-slate-300">Connecting to CodeArena...</div>;
+    return <div className="grid min-h-screen place-items-center bg-[#090909] text-sm text-zinc-300">Connecting to CodeArena...</div>;
   }
 
   if (isAuthenticated) {
@@ -53,9 +52,7 @@ function AuthPage({ mode }) {
   }
 
   return (
-    <main className="relative min-h-screen overflow-hidden bg-[#050b14] text-white">
-      <CodeArenaBackground />
-
+    <main className="auth-page relative min-h-screen overflow-hidden bg-[#090909] text-zinc-100">
       <section className="relative z-10 flex min-h-screen items-center justify-center px-5 py-10">
         <div className="login-shell w-full max-w-[440px] rounded-lg p-7 sm:p-8">
           <div className="mb-8">

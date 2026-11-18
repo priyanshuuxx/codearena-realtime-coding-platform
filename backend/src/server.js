@@ -11,7 +11,12 @@ import { errorHandler, notFoundHandler } from './middleware/error-handler.js';
 const app = express();
 const server = http.createServer(app);
 
-const allowedOrigins = [env.CLIENT_URL, 'http://localhost:5173', 'http://127.0.0.1:5173'];
+const allowedOrigins = [...new Set([
+  env.CLIENT_URL,
+  ...(env.CLIENT_URLS || '').split(',').map((origin) => origin.trim()).filter(Boolean),
+  'http://localhost:5173',
+  'http://127.0.0.1:5173',
+])];
 
 const io = new Server(server, {
   cors: {

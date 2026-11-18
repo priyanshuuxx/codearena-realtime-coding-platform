@@ -276,6 +276,37 @@ const generatedProblemPatterns = [
   ['Bit Mask', 'Bit Manipulation', 'HARD', ['Bit Manipulation', 'Dynamic Programming'], 'mask states', 'minimum transitions'],
 ];
 
+// Additional focused practice prompts. Titles and examples rotate through
+// canonical DSA tasks, while difficulty cycles evenly through all three levels.
+const additionalProblemTopics = [
+  ['Array', ['Remove Duplicates In Place', 'Rotate Array', 'Move Zeroes', 'Merge Sorted Arrays', 'Find the Missing Number', 'Find the Single Number', 'Maximum Product Subarray', 'Subarray Sum Equals K', 'Shortest Unsorted Subarray', 'Count Smaller Values']],
+  ['String', ['Longest Palindromic Substring', 'Palindromic Substrings', 'String Compression', 'Decode Encoded String', 'Compare Version Numbers', 'Multiply Large Numeric Strings', 'Longest Common Prefix', 'Zigzag Conversion', 'Minimum Insertions for Palindrome', 'Find Word Concatenations']],
+  ['Linked List', ['Rotate Linked List', 'Swap Nodes in Pairs', 'Reverse Nodes in Groups', 'Sort a Linked List', 'Intersection of Two Lists', 'Flatten a Multilevel List', 'Split List into Parts', 'Remove Duplicates from Sorted List', 'Partition a Linked List', 'Reverse a List Segment']],
+  ['Tree', ['Binary Tree Right Side View', 'Serialize and Deserialize Tree', 'Recover a Swapped BST', 'Path Sum III', 'Flatten Binary Tree', 'Build Tree from Postorder', 'Sum Root to Leaf Numbers', 'Maximum Width of Binary Tree', 'House Robber on Tree', 'Count Paths with Target Sum']],
+  ['Graph', ['Network Delay Time', 'Cheapest Flights Within K Stops', 'Reconstruct Itinerary', 'Minimum Height Trees', 'Redundant Connection', 'Alien Dictionary Order', 'Minimum Spanning Tree Cost', 'Critical Connections', 'Evaluate Division Queries', 'Find Bipartite Graph']],
+  ['Dynamic Programming', ['Decode Ways', 'Target Sum Ways', 'Word Break', 'Interleaving Strings', 'Dungeon Health Minimum', 'Minimum Path Sum', 'Maximal Square', 'Count Palindromic Subsequences', 'Egg Drop Minimum Moves', 'Stone Game Strategy']],
+  ['Heap', ['Reorganize a String', 'Smallest Range Across Lists', 'IPO Maximum Capital', 'Rearrange Barcodes', 'Task Assignment Minimum Time', 'Merge Sorted Streams', 'Kth Smallest in Sorted Matrix', 'Maximum Performance of a Team', 'Hire K Workers Minimum Cost', 'Course Schedule by Deadline']],
+  ['Greedy', ['Jump Game Reachability', 'Minimum Jumps to End', 'Queue Reconstruction', 'Assign Cookies', 'Minimum Arrows for Balloons', 'Refuel to Reach Destination', 'Minimum Taps to Water Garden', 'Lemonade Change', 'Maximum Units on Truck', 'Schedule Maximum Events']],
+  ['Backtracking', ['Restore IP Addresses', 'Palindrome Partitioning', 'Combination Sum with Duplicates', 'Letter Case Permutations', 'Expression Add Operators', 'Matchsticks to Square', 'Split String into Fibonacci', 'Beautiful Arrangement Count', 'Unique Paths with Obstacles', 'Kth Permutation Sequence']],
+  ['Binary Search', ['Find First and Last Position', 'Peak in Mountain Array', 'Split Array Largest Sum', 'Capacity to Ship Packages', 'Median of Two Sorted Arrays Variant', 'Count Occurrences in Sorted Array', 'Minimum in Rotated Array with Duplicates', 'Find K Closest Elements', 'Search Unknown Length Array', 'Allocate Books Minimum Pages']],
+];
+
+const additionalDifficultyCycle = ['EASY', 'MEDIUM', 'HARD'];
+const additionalProblemSpecs = Array.from({ length: 500 }, (_, index) => {
+  const topicIndex = index % additionalProblemTopics.length;
+  const [topic, titles] = additionalProblemTopics[topicIndex];
+  const title = titles[Math.floor(index / additionalProblemTopics.length) % titles.length];
+  const cycle = Math.floor(index / (additionalProblemTopics.length * titles.length)) + 1;
+  const difficulty = additionalDifficultyCycle[index % additionalDifficultyCycle.length];
+  return [
+    `${title} ${topic} Challenge ${cycle}`,
+    difficulty,
+    [topic],
+    `Input contains the data required for: ${title.toLowerCase()}. Return the result specified by the task.`,
+    'See problem statement',
+  ];
+});
+
 function makeGeneratedProblemSpec(index) {
   const pattern = generatedProblemPatterns[index % generatedProblemPatterns.length];
   const number = index + 1;
@@ -297,7 +328,7 @@ const generatedProblemSpecs = Array.from(
   { length: Math.max(0, 500 - curatedProblemSpecs.length) },
   (_, index) => makeGeneratedProblemSpec(index),
 );
-const allProblemSpecs = [...curatedProblemSpecs, ...generatedProblemSpecs];
+const allProblemSpecs = [...curatedProblemSpecs, ...generatedProblemSpecs, ...additionalProblemSpecs];
 
 export const problems = allProblemSpecs.map((spec, index) => createProblem(index, ...spec));
 
@@ -605,7 +636,7 @@ function makeDebugChallenge(index) {
     id: `debug_generated_${number}`,
     title: `${pattern[0]} Drill ${number}`,
     slug: `debug-${slugify(pattern[0])}-drill-${number}`,
-    difficulty: pattern[1],
+    difficulty: ["EASY", "MEDIUM", "HARD"][index % 3],
     errorType: pattern[0],
     language: 'javascript',
     statement: pattern[2],
@@ -615,7 +646,7 @@ function makeDebugChallenge(index) {
 }
 
 const generatedDebugChallenges = Array.from(
-  { length: Math.max(0, 500 - baseDebugChallenges.length) },
+  { length: Math.max(0, 1000 - baseDebugChallenges.length) },
   (_, index) => makeDebugChallenge(index),
 );
 

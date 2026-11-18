@@ -488,3 +488,209 @@ body {
   .battle-debrief { grid-template-columns: 1fr; }
   .battle-debrief__signal { border-left: 0; border-top: 1px solid rgba(148, 163, 184, 0.14); padding: 1rem 0 0; }
 }
+
+/* CodeArena graphite + yellow theme: a restrained developer-console palette. */
+:root {
+  --arena-bg: #090909;
+  --arena-surface: #111111;
+  --arena-surface-raised: #171717;
+  --arena-border: rgba(250, 204, 21, 0.18);
+  --arena-yellow: #facc15;
+  --arena-yellow-bright: #fde047;
+  --arena-text: #f4f4f5;
+  --arena-muted: #a1a1aa;
+}
+
+.app-shell,
+.workspace-shell {
+  background: var(--arena-bg) !important;
+  color: var(--arena-text) !important;
+}
+
+.app-shell::before {
+  opacity: 0.14;
+  background-image:
+    linear-gradient(rgba(250, 204, 21, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(250, 204, 21, 0.045) 1px, transparent 1px);
+}
+
+.app-shell > .relative > aside,
+.app-shell header,
+.app-shell .dashboard-reveal,
+.app-shell .rounded-xl.border,
+.app-shell .rounded-lg.border,
+.app-shell .app-insight-card,
+.app-shell .adaptive-mission,
+.battle-debrief,
+.workspace-shell .workspace-panel {
+  background: var(--arena-surface) !important;
+  border-color: var(--arena-border) !important;
+  box-shadow: 0 12px 34px rgba(0, 0, 0, 0.35) !important;
+}
+
+.app-shell .bg-white,
+.app-shell .bg-white\/80,
+.app-shell .bg-slate-50,
+.app-shell .bg-indigo-50,
+.app-shell .bg-rose-50,
+.app-shell .bg-emerald-50,
+.app-shell .bg-white\/6 {
+  background-color: var(--arena-surface-raised) !important;
+}
+
+.app-shell .bg-indigo-600,
+.app-shell .hover\:bg-indigo-700:hover,
+.app-shell .bg-cyan-400 {
+  background-color: var(--arena-yellow) !important;
+}
+
+.app-shell .text-indigo-600,
+.app-shell .text-indigo-700,
+.app-shell .text-indigo-800,
+.app-shell .text-cyan-100,
+.app-shell .text-cyan-200,
+.app-shell .text-cyan-300,
+.app-shell .battle-debrief__eyebrow,
+.battle-debrief__link,
+.workspace-kicker,
+.workspace-icon-button:hover,
+.editor-actions button:hover {
+  color: var(--arena-yellow) !important;
+}
+
+.app-shell .text-slate-950,
+.app-shell .text-slate-800,
+.app-shell .text-slate-700,
+.app-shell .text-white,
+.workspace-shell,
+.workspace-shell aside,
+.workspace-shell header,
+.workspace-shell .workspace-panel,
+.battle-debrief h2 {
+  color: var(--arena-text) !important;
+}
+
+.app-shell .text-slate-600,
+.app-shell .text-slate-500,
+.app-shell .text-slate-400,
+.workspace-muted,
+.workspace-divider,
+.console-hint,
+.battle-debrief p,
+.battle-debrief__metric span {
+  color: var(--arena-muted) !important;
+}
+
+.app-shell aside nav a[aria-current='page'],
+.app-shell aside nav a:hover {
+  background: rgba(250, 204, 21, 0.1) !important;
+  color: var(--arena-yellow-bright) !important;
+}
+
+.app-shell aside nav a[aria-current='page'] svg,
+.app-shell aside nav a:hover svg {
+  color: var(--arena-yellow) !important;
+}
+
+.app-shell input,
+.app-shell textarea,
+.app-shell select,
+.workspace-filters input,
+.workspace-filters select,
+.language-picker select,
+.editor-footer textarea {
+  border-color: rgba(250, 204, 21, 0.2) !important;
+  background: #0d0d0d !important;
+  color: var(--arena-text) !important;
+}
+
+.app-shell input:focus,
+.app-shell textarea:focus,
+.app-shell select:focus,
+.workspace-filters input:focus,
+.workspace-filters select:focus,
+.language-picker select:focus,
+.editor-footer textarea:focus {
+  border-color: rgba(250, 204, 21, 0.8) !important;
+  box-shadow: 0 0 0 2px rgba(250, 204, 21, 0.12) !important;
+}
+
+.app-shell button.border-slate-200:hover,
+.app-shell a.border-slate-200:hover,
+.workspace-icon-button:hover,
+.editor-actions button:hover {
+  border-color: rgba(250, 204, 21, 0.65) !important;
+}
+
+.app-shell .rounded-full.bg-slate-900,
+.app-shell .bg-slate-900 {
+  background: #000000 !important;
+  border: 1px solid rgba(250, 204, 21, 0.28);
+}
+
+.battle-debrief__link:hover { color: var(--arena-yellow-bright) !important; }
+.battle-debrief__lesson svg { color: var(--arena-yellow) !important; }
+
+.run-button {
+  background: var(--arena-yellow) !important;
+  color: #111111 !important;
+}
+
+.run-button:hover { background: var(--arena-yellow-bright) !important; }
+.submit-button { border-color: rgba(250, 204, 21, 0.55) !important; background: #2a2300 !important; color: var(--arena-yellow-bright) !important; }
+.submit-button:hover { background: #463900 !important; }
+.file-dot { background: var(--arena-yellow) !important; }
+.workspace-shell aside nav a[aria-current='page'] { border-left: 2px solid var(--arena-yellow); }
+
+/* Authentication uses the same quiet graphite/yellow language as the app. */
+.auth-page {
+  background:
+    radial-gradient(circle at 50% 12%, rgba(250, 204, 21, 0.08), transparent 30%),
+    #090909 !important;
+}
+
+.auth-page::before {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  content: "";
+  opacity: 0.32;
+  background-image:
+    linear-gradient(rgba(250, 204, 21, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(250, 204, 21, 0.035) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+.auth-page .login-shell {
+  border-color: rgba(250, 204, 21, 0.24) !important;
+  background: #111111 !important;
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.52) !important;
+}
+
+.auth-page .login-shell::before { display: none; }
+.auth-page .logo-mark { border-color: rgba(250, 204, 21, 0.65) !important; background: var(--arena-yellow) !important; color: #111111 !important; box-shadow: none !important; }
+.auth-page .text-cyan-300,
+.auth-page .text-cyan-200,
+.auth-page .text-cyan-100 { color: var(--arena-yellow) !important; }
+.auth-page .text-slate-500 { color: #a1a1aa !important; }
+.auth-page .text-slate-300,
+.auth-page .text-slate-400 { color: #d4d4d8 !important; }
+.auth-page .border-cyan-300\/15 { border-color: rgba(250, 204, 21, 0.24) !important; }
+.auth-page .bg-cyan-300\/8 { background: rgba(250, 204, 21, 0.08) !important; }
+.auth-page .bg-emerald-300 { background: var(--arena-yellow) !important; box-shadow: none !important; }
+.auth-page .border-white\/10 { border-color: rgba(250, 204, 21, 0.16) !important; }
+.auth-page .bg-white\/\[0\.04\] { background: rgba(250, 204, 21, 0.06) !important; }
+.auth-page .login-input { border-color: rgba(250, 204, 21, 0.18) !important; background: #0d0d0d !important; color: #f4f4f5 !important; }
+.auth-page .login-input:focus { border-color: rgba(250, 204, 21, 0.78) !important; box-shadow: 0 0 0 3px rgba(250, 204, 21, 0.1) !important; }
+.auth-page .login-input::placeholder { color: #71717a !important; }
+.auth-page .login-cta { background: var(--arena-yellow) !important; color: #111111 !important; box-shadow: none !important; }
+.auth-page .login-cta:hover { background: var(--arena-yellow-bright) !important; box-shadow: 0 10px 28px rgba(250, 204, 21, 0.16) !important; }
+.auth-page .hover\\:text-cyan-300:hover,
+.auth-page .hover\\:text-cyan-200:hover { color: var(--arena-yellow-bright) !important; }
+.auth-page .text-red-200 { color: #fca5a5 !important; }
+.auth-page .border-red-400\/20 { border-color: rgba(248, 113, 113, 0.3) !important; }
+.auth-page .bg-red-500\/10 { background: rgba(127, 29, 29, 0.25) !important; }
+.auth-page .text-slate-950 { color: #111111 !important; }
+.auth-page .border-t { border-color: rgba(250, 204, 21, 0.16) !important; }
+.auth-page .text-slate-500 svg,
+.auth-page svg.text-cyan-300 { color: var(--arena-yellow) !important; }

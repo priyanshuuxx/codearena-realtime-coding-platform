@@ -185,7 +185,7 @@ function AppLayout({ children, title, eyebrow, action, variant = 'default' }) {
             </div>
             {isNotificationsOpen ? (
               <div className="mt-6 space-y-3">
-                {['New DSA catalog is ready: 220 problems.', 'Debug Arena now includes 100 practice bugs.', 'Bot battles are available for every level.'].map((item) => (
+                {['DSA catalog now includes 1,000 practice problems.', 'Debug Arena now includes 1,000 debugging tasks.', 'Bot battles are available for every level.'].map((item) => (
                   <div key={item} className="rounded-lg border border-slate-200 bg-slate-50 p-4 text-sm text-slate-700">
                     {item}
                   </div>
